@@ -22,4 +22,12 @@ public class Record implements Serializable {
         String Name = this.firstName + " " + this.lastName;
         return Name;
     }
+    public String getLastName(){
+        String Name = this.lastName;
+        return Name;
+    }
+    public String getFirstName(){
+        String Name = this.lastName;
+        return Name;
+    }
 }
