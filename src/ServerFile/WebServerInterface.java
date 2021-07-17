@@ -19,6 +19,8 @@ public interface WebServerInterface {
 
     @WebMethod
     public boolean printRecord (String ManagerID) throws java.rmi.RemoteException;
+    @WebMethod
+    boolean transferRecord (String managerID, String recordID, String remoteCenterServerName);
 
     @WebMethod
     public String getRecordCounts() throws java.rmi.RemoteException;

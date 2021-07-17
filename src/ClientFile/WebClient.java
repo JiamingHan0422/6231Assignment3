@@ -1,5 +1,6 @@
 package ClientFile;
 
+import ServerFile.WebServerInterface;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.omg.CosNaming.NamingContextPackage.InvalidName;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
@@ -11,41 +12,47 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import ManagerFile.Manager;
+
+import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
 import java.util.Scanner;
 
 public class WebClient {
-    public static void main(String[] args) throws MalformedURLException, InvalidName, NotFound, CannotProceed {
-        URL DDOurl = new URL("http://localhost:6231/DDOServer?wsdl");
-        URL MTLurl = new URL("http://localhost:6231/MTLServer?wsdl");
-        URL LVLurl = new URL("http://localhost:6231/LVLServer?wsdl");
 
-        //这个到时候需要分成三个，需要改一下URL
-        QName DDOName = new QName("http://ServerFile","ServerFile");
-        QName MTLName = new QName("http://ServerFile","ServerFile");
-        QName LVLName = new QName("http://ServerFile","ServerFile");
+    URL DDOurl = new URL("http://localhost:5051/DDOServer?wsdl");
+    URL MTLurl = new URL("http://localhost:5052/MTLServer?wsdl");
+    URL LVLurl = new URL("http://localhost:5053/LVLServer?wsdl");
 
-        Service DDOservice = Service.create(DDOurl,DDOName);
-        Service MTLservice = Service.create(MTLurl,MTLName);
-        Service LVLservice = Service.create(LVLurl,LVLName);
+    //这个到时候需要分成三个，需要改一下URL
+    QName DDOName = new QName("http://ServerFile","ServerFile");
+    QName MTLName = new QName("http://ServerFile","ServerFile");
+    QName LVLName = new QName("http://ServerFile","ServerFile");
 
-        WebService DDowebService = DDOservice.getPort(WebService.class);
-        WebService MTLwebService = MTLservice.getPort(WebService.class);
-        WebService LVLwebService = LVLservice.getPort(WebService.class);
+    Service DDOservice = Service.create(DDOurl,DDOName);
+    Service MTLservice = Service.create(MTLurl,MTLName);
+    Service LVLservice = Service.create(LVLurl,LVLName);
 
+    WebService DDowebService = DDOservice.getPort(WebService.class);
+    WebService MTLwebService = MTLservice.getPort(WebService.class);
+    WebService LVLwebService = LVLservice.getPort(WebService.class);
+
+    public WebClient() throws MalformedURLException {
+    }
+
+    private WebServerInterface stub;
+
+    public static void main(String[] args) throws MalformedURLException, InvalidName, NotFound, CannotProceed, RemoteException {
 
         WebClient webClient = new WebClient();
-
         webClient.procedure();
-
-        }
-
+    }
 
 
 
-        public void procedure() throws CannotProceed, org.omg.CosNaming.NamingContextPackage.InvalidName, NotFound {
+
+        public void procedure() throws CannotProceed, org.omg.CosNaming.NamingContextPackage.InvalidName, NotFound, RemoteException {
             while(true) {
                 String ManagerID;
                 int ManagerInput;
@@ -62,19 +69,22 @@ public class WebClient {
                     ManagerValid = true;
                     String name = "MTL";
                     //通过ORB拿到server实例化好的Creator类
-                    creator = CreatorHelper.narrow(ncRef.resolve_str(name));
+                    Service addition = Service.create(MTLurl, MTLName);
+                    stub = addition.getPort(WebServerInterface.class);
 
                 } else if (ManagerID.startsWith("LVL")) {
                     ManagerValid = true;
                     String name = "LVL";
                     //通过ORB拿到server实例化好的Creator类
-                    creator = CreatorHelper.narrow(ncRef.resolve_str(name));
+                    Service addition = Service.create(LVLurl, LVLName);
+                    stub = addition.getPort(WebServerInterface.class);
 
                 } else if (ManagerID.startsWith("DDO")) {
                     ManagerValid = true;
                     String name = "DDO";
                     //通过ORB拿到server实例化好的Creator类
-                    creator = CreatorHelper.narrow(ncRef.resolve_str(name));
+                    Service addition = Service.create(DDOurl, DDOName);
+                    stub = addition.getPort(WebServerInterface.class);
 
                 }else{
                     System.out.println("ManagerID is invalid, please try again.");
@@ -125,7 +135,7 @@ public class WebClient {
                                     location = ManagerScanner.next();
                                 }
 
-                                boolean result = creator.createTRecord(ManagerID, firstName, lastName, address, phone, specialization, location);
+                                boolean result = stub.createTRecord(ManagerID, firstName, lastName, address, phone, specialization, location);
                                 if (result) {
                                     System.out.println("success!");
 
@@ -160,7 +170,7 @@ public class WebClient {
                                 firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
                                 lastName = lastName.substring(0, 1).toUpperCase() + lastName.substring(1);
 
-                                result = creator.createSRecord(ManagerID, firstName, lastName, CoursesRegister, Status, StatusDate);
+                                result = stub.createSRecord(ManagerID, firstName, lastName, CoursesRegister, Status, StatusDate);
                                 if (result) {
                                     System.out.println("success!");
 
@@ -181,7 +191,7 @@ public class WebClient {
                             // get record count
                             case 3:
 
-                                System.out.println(creator.getRecordCounts());
+                                System.out.println(stub.getRecordCounts());
                                 break;
 
                             //edit record
@@ -200,7 +210,7 @@ public class WebClient {
                                 String fieldName = ManagerScanner.next();
                                 String newValue = ManagerScanner.next();
 
-                                result = creator.editRecord(ManagerID, RecordID, fieldName, newValue);
+                                result = stub.editRecord(ManagerID, RecordID, fieldName, newValue);
                                 if (result) {
                                     System.out.println("success!");
                                     String writeInLog = "Edit Record." + "\n" +
@@ -224,7 +234,7 @@ public class WebClient {
                                 System.out.println("Please input the remoteCenterServer which you want to transfer.");
                                 String remoteCenterServer = ManagerScanner.next();
 
-                                result = creator.transferRecord(ManagerID, recordID, remoteCenterServer);
+                                result = stub.transferRecord(ManagerID, recordID, remoteCenterServer);
 
                                 if (result) {
                                     System.out.println("success!");
@@ -241,7 +251,7 @@ public class WebClient {
 
                             // print record
                             case 6:
-                                result = creator.printRecord(ManagerID);
+                                result = stub.printRecord(ManagerID);
                                 if (result) {
                                     System.out.println("success!");
 
@@ -272,5 +282,4 @@ public class WebClient {
 
 
 
-    }
 }

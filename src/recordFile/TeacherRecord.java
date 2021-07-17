@@ -1,6 +1,7 @@
 package recordFile;
 
-public class TeacherRecord extends Record{
+public class
+TeacherRecord extends Record{
 
     private static int idCounter=10000;
 

@@ -26,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
         portName = "ServerFilePort",
         targetNamespace = "http://ServerFile")
 
-public class WebServerImpl {
+public class WebServerImpl implements WebServerInterface{
 //    private ORB orb;
 //
 //    public void setORB(ORB orb_val) {
@@ -71,6 +71,9 @@ public class WebServerImpl {
         clientPort.put("DDO", 6051);
     }
 
+    private String log;
+    private File file;
+
 
     public WebServerImpl(String name) throws RemoteException {
 
@@ -87,6 +90,7 @@ public class WebServerImpl {
      * @param log the Operation details.
      */
     public void writeLog(String log, File file) {
+
         if (!file.exists())
             return;
         try {
