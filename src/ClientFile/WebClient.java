@@ -25,7 +25,6 @@ public class WebClient {
     URL MTLurl = new URL("http://localhost:5052/MTLServer?wsdl");
     URL LVLurl = new URL("http://localhost:5053/LVLServer?wsdl");
 
-    //这个到时候需要分成三个，需要改一下URL
     QName DDOName = new QName("http://ServerFile","ServerFile");
     QName MTLName = new QName("http://ServerFile","ServerFile");
     QName LVLName = new QName("http://ServerFile","ServerFile");

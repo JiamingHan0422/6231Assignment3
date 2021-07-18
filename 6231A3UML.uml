@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="846.0" y="327.0">ServerFile.WebServerInterface</node>
+    <node x="652.4871794871794" y="1523.0">ServerFile.PublishWS</node>
+    <node x="1378.0" y="339.0">ManagerFile.Manager</node>
+    <node x="406.4871794871794" y="612.0">ServerFile.WebServerImpl</node>
+    <node x="836.4871794871794" y="1523.0">ServerFile.LVLServer</node>
+    <node x="468.4871794871794" y="1523.0">ServerFile.MTLServer</node>
+    <node x="579.6891025641025" y="0.0">recordFile.Record</node>
+    <node x="0.0" y="296.0">recordFile.StudentRecord</node>
+    <node x="284.48717948717945" y="1523.0">ServerFile.DDOServer</node>
+    <node x="393.99999999999994" y="285.0">recordFile.TeacherRecord</node>
+    <node x="1246.5833333333333" y="820.0">ClientFile.WebClient</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ServerFile.WebServerImpl" target="recordFile.TeacherRecord">
+      <point x="-80.0" y="-430.5" />
+      <point x="606.4871794871794" y="572.0" />
+      <point x="498.99999999999994" y="572.0" />
+      <point x="-105.0" y="133.5" />
+    </edge>
+    <edge source="ServerFile.WebServerImpl" target="recordFile.StudentRecord">
+      <point x="-160.0" y="-430.5" />
+      <point x="526.4871794871794" y="582.0" />
+      <point x="280.5" y="582.0" />
+      <point x="93.5" y="122.5" />
+    </edge>
+    <edge source="ClientFile.WebClient" target="ServerFile.WebServerInterface">
+      <point x="-85.125" y="-222.5" />
+      <point x="1274.9583333333333" y="592.0" />
+      <point x="1102.0" y="592.0" />
+      <point x="0.0" y="91.5" />
+    </edge>
+    <edge source="ServerFile.LVLServer" target="ServerFile.WebServerImpl">
+      <point x="0.0" y="-26.5" />
+      <point x="918.4871794871794" y="1498.0" />
+      <point x="896.4871794871794" y="1498.0" />
+      <point x="210.0" y="430.5" />
+    </edge>
+    <edge source="recordFile.StudentRecord" target="recordFile.Record">
+      <point x="93.5" y="-122.5" />
+      <point x="280.5" y="255.0" />
+      <point x="626.9391025641025" y="255.0" />
+      <point x="-47.25" y="112.5" />
+    </edge>
+    <edge source="ServerFile.WebServerImpl" target="recordFile.Record">
+      <point x="160.0" y="-430.5" />
+      <point x="846.4871794871794" y="592.0" />
+      <point x="835.4999999999999" y="592.0" />
+      <point x="835.4999999999999" y="255.0" />
+      <point x="752.9391025641025" y="255.0" />
+      <point x="78.75" y="112.5" />
+    </edge>
+    <edge source="ServerFile.WebServerImpl" target="ServerFile.WebServerInterface">
+      <point x="240.0" y="-430.5" />
+      <point x="926.4871794871794" y="592.0" />
+      <point x="931.3333333333333" y="592.0" />
+      <point x="-170.66666666666663" y="91.5" />
+    </edge>
+    <edge source="ServerFile.PublishWS" target="ServerFile.WebServerImpl">
+      <point x="0.0" y="-26.5" />
+      <point x="734.4871794871794" y="1498.0" />
+      <point x="756.4871794871794" y="1498.0" />
+      <point x="70.0" y="430.5" />
+    </edge>
+    <edge source="ServerFile.DDOServer" target="ServerFile.WebServerImpl">
+      <point x="0.0" y="-26.5" />
+      <point x="366.48717948717945" y="1498.0" />
+      <point x="476.4871794871794" y="1498.0" />
+      <point x="-210.0" y="430.5" />
+    </edge>
+    <edge source="ClientFile.WebClient" target="ManagerFile.Manager">
+      <point x="28.375" y="-222.5" />
+      <point x="1388.4583333333333" y="592.0" />
+      <point x="1422.75" y="592.0" />
+      <point x="-44.75" y="79.5" />
+    </edge>
+    <edge source="ServerFile.MTLServer" target="ServerFile.WebServerImpl">
+      <point x="0.0" y="-26.5" />
+      <point x="550.4871794871794" y="1498.0" />
+      <point x="616.4871794871794" y="1498.0" />
+      <point x="-70.0" y="430.5" />
+    </edge>
+    <edge source="recordFile.TeacherRecord" target="recordFile.Record">
+      <point x="105.0" y="-133.5" />
+      <point x="709.0" y="265.0" />
+      <point x="689.9391025641025" y="265.0" />
+      <point x="15.75" y="112.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.3098503740648379" x="710.0" y="794.0" />
+  <SelectedNodes>
+    <node>ServerFile.WebServerInterface</node>
+    <node>ServerFile.PublishWS</node>
+    <node>ManagerFile.Manager</node>
+    <node>ServerFile.WebServerImpl</node>
+    <node>ServerFile.LVLServer</node>
+    <node>ServerFile.MTLServer</node>
+    <node>recordFile.Record</node>
+    <node>recordFile.StudentRecord</node>
+    <node>ServerFile.DDOServer</node>
+    <node>recordFile.TeacherRecord</node>
+    <node>ClientFile.WebClient</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
