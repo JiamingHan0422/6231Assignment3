@@ -17,8 +17,8 @@ public class ClientTransferRecordTest {
 
     static int count = 0;
     // 总访问量是clientNum，并发量是threadNum
-    int threadNum = 5;
-    int clientNum = 5;
+    int threadNum = 8;
+    int clientNum = 8;
 
     float avgExecTime = 0;
     float sumexecTime = 0;

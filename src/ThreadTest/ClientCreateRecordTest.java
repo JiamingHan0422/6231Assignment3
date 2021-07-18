@@ -12,9 +12,9 @@ import java.util.concurrent.Executors;
 
 public class ClientCreateRecordTest {
     static int count = 0;
-    // 总访问量是clientNum，并发量是threadNum
-    int threadNum = 15;
-    int clientNum = 100;
+    // The total amount of visits is clientNum, and the amount of concurrent is threadNum
+    int threadNum = 20;
+    int clientNum = 50;
 
     float avgExecTime = 0;
     float sumexecTime = 0;
