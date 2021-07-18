@@ -2,6 +2,7 @@ package ServerFile;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
 
 import recordFile.Record;
 import recordFile.StudentRecord;
@@ -47,7 +48,7 @@ public class WebServerImpl implements WebServerInterface{
     File loggingFileMTL = new File(FilePath + "\\" + "LogFile" + "\\" + "MTLFile" + "\\" + "MTLLog" + ".txt");
     File loggingFileLVL = new File(FilePath + "\\" + "LogFile" + "\\" + "LVLFile" + "\\" + "LVLLog" + ".txt");
     File loggingFileDDO = new File(FilePath + "\\" + "LogFile" + "\\" + "DDOFile" + "\\" + "DDOLog" + ".txt");
-
+    static LogOperation logOperation = new LogOperation();
     int LVLcount = 0;
     int MTLcount = 0;
     int DDOcount = 0;
@@ -74,6 +75,15 @@ public class WebServerImpl implements WebServerInterface{
     private String log;
     private File file;
 
+    public WebServerImpl() throws RemoteException {
+
+        super();
+
+        load("LVL");
+        load("DDO");
+        load("MTL");
+        this.name = "name";
+    }
 
     public WebServerImpl(String name) throws RemoteException {
 
@@ -89,6 +99,9 @@ public class WebServerImpl implements WebServerInterface{
      *
      * @param log the Operation details.
      */
+    /**
+
+
     public void writeLog(String log, File file) {
 
         if (!file.exists())
@@ -106,6 +119,7 @@ public class WebServerImpl implements WebServerInterface{
         }
 
     }
+     **/
 
     /**
      * Determine whether teacher records can be created
@@ -161,7 +175,7 @@ public class WebServerImpl implements WebServerInterface{
                 Recordlist.add(NewTRecord);
                 HashMapMTL.put(Mark, Recordlist);
             }
-            writeLog(writeInLog, loggingFileMTL);
+            logOperation.writeLog(writeInLog, loggingFileMTL);
             save("MTL");
 
         } else if (managerID.startsWith("LVL")) {
@@ -179,7 +193,7 @@ public class WebServerImpl implements WebServerInterface{
                 Recordlist.add(NewTRecord);
                 HashMapLVL.put(Mark, Recordlist);
             }
-            writeLog(writeInLog, loggingFileLVL);
+            logOperation.writeLog(writeInLog, loggingFileLVL);
             save("LVL");
         } else if (managerID.startsWith("DDO")) {
 
@@ -196,7 +210,7 @@ public class WebServerImpl implements WebServerInterface{
                 Recordlist.add(NewTRecord);
                 HashMapDDO.put(Mark, Recordlist);
             }
-            writeLog(writeInLog, loggingFileDDO);
+            logOperation.writeLog(writeInLog, loggingFileDDO);
             save("DDO");
         } else {
             System.out.println("Access Deny!(ManagerID is invalid)");
@@ -252,7 +266,7 @@ public class WebServerImpl implements WebServerInterface{
                 Recordlist.add(NewSRecord);
                 HashMapMTL.put(Mark, Recordlist);
             }
-            writeLog(writeInLog, loggingFileMTL);
+            logOperation.writeLog(writeInLog, loggingFileMTL);
             save("MTL");
         } else if (managerID.startsWith("LVL")) {
 
@@ -269,7 +283,7 @@ public class WebServerImpl implements WebServerInterface{
                 Recordlist.add(NewSRecord);
                 HashMapLVL.put(Mark, Recordlist);
             }
-            writeLog(writeInLog, loggingFileLVL);
+            logOperation.writeLog(writeInLog, loggingFileLVL);
             save("LVL");
         } else if (managerID.startsWith("DDO")) {
 
@@ -286,7 +300,7 @@ public class WebServerImpl implements WebServerInterface{
                 Recordlist.add(NewSRecord);
                 HashMapDDO.put(Mark, Recordlist);
             }
-            writeLog(writeInLog, loggingFileDDO);
+            logOperation.writeLog(writeInLog, loggingFileDDO);
             save("DDO");
         } else {
             System.out.println("Access Deny!(ManagerID is invalid)");
@@ -342,7 +356,7 @@ public class WebServerImpl implements WebServerInterface{
                         "fieldName: " + fieldName + " " + "\n" +
                         "newValue: " + newValue + " " + "\n" +
                         "Time: " + getTime() + " " + "\n" + "\n";
-                writeLog(writeInLog, loggingFileMTL);
+                logOperation.writeLog(writeInLog, loggingFileMTL);
                 save("MTL");
             } else {
                 System.out.println("No Record.");
@@ -382,7 +396,7 @@ public class WebServerImpl implements WebServerInterface{
                         "fieldName: " + fieldName + " " + "\n" +
                         "newValue: " + newValue + " " + "\n" +
                         "Time: " + getTime() + " " + "\n" + "\n";
-                writeLog(writeInLog, loggingFileLVL);
+                logOperation.writeLog(writeInLog, loggingFileLVL);
                 save("LVL");
             } else {
                 System.out.println("No Record.");
@@ -425,7 +439,7 @@ public class WebServerImpl implements WebServerInterface{
                         "fieldName: " + fieldName + " " + "\n" +
                         "newValue: " + newValue + " " + "\n" +
                         "Time: " + getTime() + " " + "\n" + "\n";
-                writeLog(writeInLog, loggingFileDDO);
+                logOperation.writeLog(writeInLog, loggingFileDDO);
                 save("DDO");
             } else {
                 System.out.println("No Record.");
@@ -464,11 +478,11 @@ public class WebServerImpl implements WebServerInterface{
                     "Error:record not exist");
 
             if (managerID.trim().startsWith("MTL")) {
-                writeLog(log, loggingFileMTL);
+                logOperation.writeLog(log, loggingFileMTL);
             } else if (managerID.trim().startsWith("DDO")) {
-                writeLog(log, loggingFileDDO);
+                logOperation.writeLog(log, loggingFileDDO);
             } else {
-                writeLog(log, loggingFileLVL);
+                logOperation.writeLog(log, loggingFileLVL);
             }
             return false;
         } else {
@@ -515,21 +529,21 @@ public class WebServerImpl implements WebServerInterface{
                 String log = (new Date().toString() + " - " + managerID + " - transferring the record - " + recordID + " - " +
                         "Success");
                 if (managerID.startsWith("MTL")) {
-                    writeLog(log, loggingFileMTL);
+                    logOperation.writeLog(log, loggingFileMTL);
                 } else if (managerID.startsWith("DDO")) {
-                    writeLog(log, loggingFileDDO);
+                    logOperation.writeLog(log, loggingFileDDO);
                 } else {
-                    writeLog(log, loggingFileLVL);
+                    logOperation.writeLog(log, loggingFileLVL);
                 }
             } else {
                 String log = (new Date().toString() + " - " + managerID + " - transferring the record - " + recordID + " - " +
                         "Fail");
                 if (managerID.trim().startsWith("MTL")) {
-                    writeLog(log, loggingFileMTL);
+                    logOperation.writeLog(log, loggingFileMTL);
                 } else if (managerID.trim().startsWith("DDO")) {
-                    writeLog(log, loggingFileDDO);
+                    logOperation.writeLog(log, loggingFileDDO);
                 } else {
-                    writeLog(log, loggingFileLVL);
+                    logOperation.writeLog(log, loggingFileLVL);
                 }
             }
             return flag;

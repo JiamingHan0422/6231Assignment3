@@ -23,8 +23,16 @@ public class LVLServer {
 
     public static void main(String args[]) throws RemoteException {
 
-        Endpoint LVLendpoint = Endpoint.publish("http://localhost:5052/LVLServer", new WebServerImpl("LVL"));
+        WebServerImpl serverImpl = new WebServerImpl("LVL");
+        Endpoint LVLendpoint = Endpoint.publish("http://localhost:7052/LVLServer", serverImpl);
         System.out.println(LVLendpoint.isPublished());
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                serverImpl.UDPServer(5052);
+            }
+        }).start();
     }
 
 }

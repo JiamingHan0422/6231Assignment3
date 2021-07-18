@@ -21,10 +21,11 @@ import java.util.Scanner;
 
 public class WebClient {
 
-    URL DDOurl = new URL("http://localhost:5051/DDOServer?wsdl");
-    URL MTLurl = new URL("http://localhost:5052/MTLServer?wsdl");
-    URL LVLurl = new URL("http://localhost:5053/LVLServer?wsdl");
+    URL DDOurl = new URL("http://localhost:7051/DDOServer?wsdl");
+    URL MTLurl = new URL("http://localhost:7053/MTLServer?wsdl");
+    URL LVLurl = new URL("http://localhost:7052/LVLServer?wsdl");
 
+    //这个到时候需要分成三个，需要改一下URL
     QName DDOName = new QName("http://ServerFile","ServerFile");
     QName MTLName = new QName("http://ServerFile","ServerFile");
     QName LVLName = new QName("http://ServerFile","ServerFile");
@@ -33,9 +34,9 @@ public class WebClient {
     Service MTLservice = Service.create(MTLurl,MTLName);
     Service LVLservice = Service.create(LVLurl,LVLName);
 
-    WebService DDowebService = DDOservice.getPort(WebService.class);
-    WebService MTLwebService = MTLservice.getPort(WebService.class);
-    WebService LVLwebService = LVLservice.getPort(WebService.class);
+    WebServerInterface DDOwebService = DDOservice.getPort(WebServerInterface.class);
+    WebServerInterface MTLwebService = MTLservice.getPort(WebServerInterface.class);
+    WebServerInterface LVLwebService = LVLservice.getPort(WebServerInterface.class);
 
     public WebClient() throws MalformedURLException {
     }
@@ -68,22 +69,21 @@ public class WebClient {
                     ManagerValid = true;
                     String name = "MTL";
                     //通过ORB拿到server实例化好的Creator类
-                    Service addition = Service.create(MTLurl, MTLName);
-                    stub = addition.getPort(WebServerInterface.class);
+                    stub = MTLwebService;
 
                 } else if (ManagerID.startsWith("LVL")) {
                     ManagerValid = true;
                     String name = "LVL";
                     //通过ORB拿到server实例化好的Creator类
-                    Service addition = Service.create(LVLurl, LVLName);
-                    stub = addition.getPort(WebServerInterface.class);
+
+                    stub = LVLwebService;
 
                 } else if (ManagerID.startsWith("DDO")) {
                     ManagerValid = true;
                     String name = "DDO";
                     //通过ORB拿到server实例化好的Creator类
-                    Service addition = Service.create(DDOurl, DDOName);
-                    stub = addition.getPort(WebServerInterface.class);
+
+                    stub = DDOwebService;
 
                 }else{
                     System.out.println("ManagerID is invalid, please try again.");

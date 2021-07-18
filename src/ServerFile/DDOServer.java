@@ -7,8 +7,16 @@ import java.rmi.RemoteException;
 public class DDOServer {
     public static void main(String args[]) throws RemoteException {
 
-        Endpoint DDOendpoint = Endpoint.publish("http://localhost:5051/DDOServer", new WebServerImpl("DDO"));
+        WebServerImpl serverImpl = new WebServerImpl("DDO");
+        Endpoint DDOendpoint = Endpoint.publish("http://localhost:7051/DDOServer", serverImpl);
         System.out.println(DDOendpoint.isPublished());
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                serverImpl.UDPServer(5051);
+            }
+        }).start();
 
     }
 }

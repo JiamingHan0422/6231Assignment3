@@ -5,9 +5,9 @@ import java.rmi.RemoteException;
 
 public class PublishWS {
     public static void main(String[] args) throws RemoteException {
-        Endpoint DDOendpoint = Endpoint.publish("http://localhost:5051/DDOServer", new WebServerImpl("DDO"));
-        Endpoint MTLendpoint = Endpoint.publish("http://localhost:5053/MTLServer", new WebServerImpl("MTL"));
-        Endpoint LVLendpoint = Endpoint.publish("http://localhost:5052/LVLServer", new WebServerImpl("LVL"));
+        Endpoint DDOendpoint = Endpoint.publish("http://localhost:7051/DDOServer", new WebServerImpl());
+        Endpoint MTLendpoint = Endpoint.publish("http://localhost:7053/MTLServer", new WebServerImpl());
+        Endpoint LVLendpoint = Endpoint.publish("http://localhost:7052/LVLServer", new WebServerImpl());
 
         System.out.println(DDOendpoint.isPublished());
         System.out.println(MTLendpoint.isPublished());
